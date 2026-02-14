@@ -8,17 +8,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
+    /*
+     * CHANGE BACKGROUND: Edit the line below. Use a filename in the same folder
+     * (e.g. 'background-image.png') or a path/URL. Replace the file or path anytime.
+     */
     :root {
-      --black: #1a1a1a;
-      --white: #fafafa;
-      --cream: #f8f4ed;
-      --paper: #f5f0e6;
-      --gold: #c9a227;
-      --gold-light: #e5d4a1;
-      --gold-dark: #9a7b1a;
-      --grey-bg: #d4cfc7;
-      --shadow: rgba(0,0,0,0.12);
-      --shadow-deep: rgba(0,0,0,0.2);
+      --bg-image: url('background-image.png');
+      --ink: #2c2825;
+      --paper: #f6f2eb;
+      --paper-shadow: #c4b8a8;
+      --accent: #8b7355;
+      --accent-soft: #a89276;
+      --white: #fefefe;
     }
 
     * {
@@ -27,233 +28,206 @@
       padding: 0;
     }
 
+    html {
+      min-height: 100%;
+    }
+
     body {
       font-family: 'Cormorant Garamond', Georgia, serif;
       min-height: 100vh;
-      color: var(--black);
-      line-height: 1.5;
-      padding: 2rem 1rem 3rem;
+      color: var(--ink);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Invitation "surface" - like a table or mat */
-    .invitation-surface {
+    .page-background {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: var(--bg-image) center center / cover no-repeat;
+    }
+
+    .page-background::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .page-content {
+      position: relative;
+      z-index: 1;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: 
-        radial-gradient(ellipse at 50% 50%, #e8e4dc 0%, #d4cfc7 70%),
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      padding: 2.5rem 1.25rem 3rem;
     }
 
-    /* Outer envelope/card frame - vertical stripes */
-    .card-outer {
-      background: repeating-linear-gradient(
-        90deg,
-        var(--black) 0,
-        var(--black) 36px,
-        var(--white) 36px,
-        var(--white) 72px
-      );
-      padding: 14px;
-      box-shadow:
-        0 2px 4px var(--shadow),
-        0 8px 24px var(--shadow-deep),
-        0 24px 48px rgba(0,0,0,0.15);
-      max-width: 440px;
-      width: 100%;
-    }
-
-    /* The actual invitation card - cream paper */
     .card {
       background: var(--paper);
+      max-width: 420px;
+      width: 100%;
+      padding: 2.5rem 2rem 2.75rem;
       position: relative;
-      padding: 2.25rem 2rem 2.5rem;
-      box-shadow: inset 0 0 0 1px rgba(201, 162, 39, 0.3);
+      box-shadow:
+        0 0 0 1px rgba(196, 184, 168, 0.4),
+        0 4px 20px rgba(44, 40, 37, 0.12),
+        0 12px 40px rgba(44, 40, 37, 0.1);
+      border-radius: 2px;
+      border: 1px solid rgba(196, 184, 168, 0.6);
     }
 
-    /* Paper texture overlay */
     .card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Scalloped gold border - invitation style */
-    .card::after {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border: 2px solid var(--gold);
-      border-radius: 50% 50% 48% 52% / 46% 50% 50% 54%;
-      box-shadow: inset 0 0 0 1px var(--gold-light);
-      pointer-events: none;
-      z-index: 1;
+      border-radius: inherit;
     }
 
     .card-inner {
       position: relative;
-      z-index: 2;
-    }
-
-    /* Decorative corner flourishes */
-    .card-inner::before,
-    .card-inner::after {
-      content: '❧';
-      position: absolute;
-      top: 0.5rem;
-      left: 0.5rem;
-      font-size: 1rem;
-      color: var(--gold);
-      opacity: 0.7;
-    }
-    .card-inner::after {
-      left: auto;
-      right: 0.5rem;
-      transform: scaleX(-1);
+      z-index: 1;
     }
 
     .tagline {
       font-size: 0.95rem;
       font-weight: 600;
       text-transform: lowercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-align: center;
-      margin-bottom: 0.35rem;
-      color: var(--black);
+      margin-bottom: 0.4rem;
+      color: var(--ink);
     }
 
     .name {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.85rem;
+      font-size: 2.9rem;
       text-align: center;
-      color: var(--black);
-      margin-bottom: 1.25rem;
-      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1.35rem;
+      line-height: 1.15;
       letter-spacing: 0.02em;
     }
 
     .details {
-      font-size: 1rem;
+      font-size: 1.02rem;
       text-align: center;
       text-transform: lowercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.85rem;
+      letter-spacing: 0.045em;
+      margin-bottom: 0.9rem;
     }
 
     .details p {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.3rem;
     }
 
     .dress {
       font-size: 0.9rem;
       text-align: center;
       text-transform: lowercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 1.5rem;
+      letter-spacing: 0.07em;
+      margin-bottom: 1.6rem;
       font-style: italic;
-      color: #444;
+      color: #5a534d;
     }
 
-    /* Scalloped gold divider */
     .divider {
-      height: 14px;
-      margin: 1.25rem 0 1.5rem;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14'%3E%3Cpath fill='%23c9a227' d='M0 14 Q30 0 60 14 Q90 28 120 14 L120 28 L0 28 Z'/%3E%3C/svg%3E") repeat-x center;
-      background-size: 60px 14px;
-      opacity: 0.9;
+      height: 1px;
+      margin: 1.4rem 0 1.5rem;
+      background: linear-gradient(90deg, transparent, var(--accent-soft), transparent);
+      opacity: 0.6;
     }
 
     .rsvp-section h2 {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 600;
-      text-transform: lowercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 0.65rem;
       text-align: center;
-      color: var(--black);
+      color: var(--ink);
     }
 
     .rsvp-instructions {
       font-size: 0.9rem;
       text-align: center;
-      margin-bottom: 1.15rem;
+      margin-bottom: 1.2rem;
       max-width: 320px;
       margin-left: auto;
       margin-right: auto;
-      color: #333;
+      color: #4a4541;
     }
 
     .rsvp-instructions p {
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.45rem;
     }
 
     .rsvp-instructions ol {
       text-align: left;
-      padding-left: 1.25rem;
-      margin-top: 0.4rem;
+      padding-left: 1.35rem;
+      margin-top: 0.45rem;
     }
 
     .rsvp-instructions li {
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.35rem;
     }
 
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 1.05rem;
     }
 
     .form-group label {
       display: block;
-      font-size: 0.85rem;
-      text-transform: lowercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.3rem;
-      color: #333;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.35rem;
+      color: #4a4541;
     }
 
     .form-group input {
       width: 100%;
-      padding: 0.6rem 0.8rem;
+      padding: 0.7rem 0.9rem;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1rem;
-      border: 1px solid #bbb;
+      font-size: 1.05rem;
+      border: 1px solid rgba(139, 115, 85, 0.35);
       background: var(--white);
-      color: var(--black);
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
+      color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .form-group input::placeholder {
-      color: #888;
+      color: #9a938c;
     }
 
     .form-group input:focus {
       outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.25);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.12);
     }
 
     .btn-rsvp {
       display: block;
       width: 100%;
-      padding: 0.75rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 600;
-      text-transform: lowercase;
-      letter-spacing: 0.08em;
-      background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-      color: var(--black);
-      border: 1px solid var(--gold-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      background: var(--ink);
+      color: var(--paper);
+      border: 1px solid var(--ink);
       cursor: pointer;
-      box-shadow: 0 2px 6px var(--shadow);
-      transition: box-shadow 0.2s, transform 0.15s;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
     }
 
     .btn-rsvp:hover {
-      box-shadow: 0 4px 12px var(--shadow-deep);
+      background: #1a1714;
       transform: translateY(-1px);
     }
 
@@ -261,66 +235,65 @@
       transform: translateY(0);
     }
 
-    footer {
+    .card footer {
       text-align: center;
-      margin-top: 1.35rem;
+      margin-top: 1.5rem;
       font-size: 0.8rem;
-      color: #555;
+      color: #5a534d;
       font-style: italic;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.03em;
     }
   </style>
 </head>
 <body>
-  <div class="invitation-surface">
-    <div class="card-outer">
-      <main class="card">
-        <div class="card-inner">
-          <p class="tagline">Let's wine and dine as we celebrate a birthday for</p>
-          <h1 class="name">Juliet Marks</h1>
-          <div class="details">
-            <p>October 14, 2026</p>
-            <p>Six o'clock in the evening</p>
-            <p>The Palms Hotel</p>
-            <p>Santa Barbara, CA</p>
-          </div>
-          <p class="dress">Cocktail attire</p>
-
-          <div class="divider" aria-hidden="true"></div>
-
-          <section class="rsvp-section">
-            <h2>RSVP</h2>
-            <div class="rsvp-instructions">
-              <p>Please reply by October 1, 2026. To confirm your attendance:</p>
-              <ol>
-                <li>Enter your full name below.</li>
-                <li>Click <strong>Send RSVP</strong> to complete your response.</li>
-                <li>You will be taken to the next step to finish your registration.</li>
-              </ol>
-            </div>
-
-            <form id="rsvp-form" action="#" method="get">
-              <div class="form-group">
-                <label for="guest-name">Your name</label>
-                <input
-                  type="text"
-                  id="guest-name"
-                  name="name"
-                  placeholder="e.g. Jane Smith"
-                  required
-                  autocomplete="name"
-                />
-              </div>
-              <button type="submit" class="btn-rsvp">Send RSVP</button>
-            </form>
-          </section>
-
-          <footer>
-            We look forward to celebrating with you.
-          </footer>
+  <div class="page-background" aria-hidden="true"></div>
+  <div class="page-content">
+    <main class="card">
+      <div class="card-inner">
+        <p class="tagline">Let's wine and dine as we celebrate a birthday for</p>
+        <h1 class="name">Juliet Marks</h1>
+        <div class="details">
+          <p>October 14, 2026</p>
+          <p>Six o'clock in the evening</p>
+          <p>The Palms Hotel</p>
+          <p>Santa Barbara, CA</p>
         </div>
-      </main>
-    </div>
+        <p class="dress">Cocktail attire</p>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <section class="rsvp-section">
+          <h2>RSVP</h2>
+          <div class="rsvp-instructions">
+            <p>Please reply by October 1, 2026. To confirm your attendance:</p>
+            <ol>
+              <li>Enter your full name below.</li>
+              <li>Click <strong>Send RSVP</strong> to complete your response.</li>
+              <li>You will be taken to the next step to finish your registration.</li>
+            </ol>
+          </div>
+
+          <form id="rsvp-form" action="#" method="get">
+            <div class="form-group">
+              <label for="guest-name">Your name</label>
+              <input
+                type="text"
+                id="guest-name"
+                name="name"
+                placeholder="e.g. Jane Smith"
+                required
+                autocomplete="name"
+              />
+            </div>
+            <button type="submit" class="btn-rsvp">Send RSVP</button>
+          </form>
+        </section>
+
+        <footer>
+          We look forward to celebrating with you.
+        </footer>
+      </div>
+    </main>
   </div>
 
   <script>
