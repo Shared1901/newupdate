@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juliet Marks — Birthday Celebration</title>
+  <title>Juliet Marks — Birthday Celebration · RSVP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
   <style>
     /*
-     * CHANGE BACKGROUND: Edit the line below. Use a filename in the same folder
-     * (e.g. 'background-image.png') or a path/URL. Replace the file or path anytime.
+     * CHANGE BACKGROUND IMAGE: Edit the line below. Use a filename in the same
+     * folder (e.g. 'background-image.png') or a path/URL.
      */
     :root {
       --bg-image: url('background-image.png');
       --ink: #2c2825;
-      --paper: #f6f2eb;
-      --paper-shadow: #c4b8a8;
-      --accent: #8b7355;
-      --accent-soft: #a89276;
+      --sage: #b8c4b0;
+      --sage-light: #d4dfce;
+      --sage-bg: #e8efe5;
       --white: #fefefe;
+      --border: rgba(44, 40, 37, 0.2);
     }
 
     * {
@@ -36,7 +36,7 @@
       font-family: 'Cormorant Garamond', Georgia, serif;
       min-height: 100vh;
       color: var(--ink);
-      line-height: 1.55;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -51,7 +51,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.4);
       pointer-events: none;
     }
 
@@ -62,186 +62,195 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2.5rem 1.25rem 3rem;
+      padding: 2rem 1rem 3rem;
     }
 
     .card {
-      background: var(--paper);
-      max-width: 420px;
+      background: var(--white);
+      max-width: 520px;
       width: 100%;
-      padding: 2.5rem 2rem 2.75rem;
-      position: relative;
-      box-shadow:
-        0 0 0 1px rgba(196, 184, 168, 0.4),
-        0 4px 20px rgba(44, 40, 37, 0.12),
-        0 12px 40px rgba(44, 40, 37, 0.1);
+      box-shadow: 0 4px 24px rgba(44, 40, 37, 0.12);
       border-radius: 2px;
-      border: 1px solid rgba(196, 184, 168, 0.6);
+      overflow: hidden;
     }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      border-radius: inherit;
+    .invitation-header {
+      padding: 1.75rem 2rem 1.25rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
     }
 
-    .card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .tagline {
-      font-size: 0.95rem;
+    .invitation-header .tagline {
+      font-size: 0.9rem;
       font-weight: 600;
       text-transform: lowercase;
-      letter-spacing: 0.1em;
-      text-align: center;
-      margin-bottom: 0.4rem;
+      letter-spacing: 0.08em;
       color: var(--ink);
+      margin-bottom: 0.25rem;
     }
 
-    .name {
+    .invitation-header .name {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.9rem;
-      text-align: center;
+      font-size: 2.25rem;
       color: var(--ink);
-      margin-bottom: 1.35rem;
-      line-height: 1.15;
-      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
     }
 
-    .details {
-      font-size: 1.02rem;
-      text-align: center;
+    .invitation-header .details {
+      font-size: 0.95rem;
       text-transform: lowercase;
-      letter-spacing: 0.045em;
-      margin-bottom: 0.9rem;
+      letter-spacing: 0.04em;
+      color: #5a554f;
     }
 
-    .details p {
-      margin-bottom: 0.3rem;
+    .invitation-header .details p {
+      margin-bottom: 0.15rem;
     }
 
-    .dress {
-      font-size: 0.9rem;
-      text-align: center;
-      text-transform: lowercase;
-      letter-spacing: 0.07em;
-      margin-bottom: 1.6rem;
-      font-style: italic;
-      color: #5a534d;
+    .rsvp-panel {
+      background: var(--sage-bg);
+      padding: 2rem 2rem 2.5rem;
     }
 
-    .divider {
-      height: 1px;
-      margin: 1.4rem 0 1.5rem;
-      background: linear-gradient(90deg, transparent, var(--accent-soft), transparent);
-      opacity: 0.6;
-    }
-
-    .rsvp-section h2 {
-      font-size: 1.15rem;
+    .rsvp-panel h2 {
+      font-size: 1.5rem;
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin-bottom: 0.65rem;
       text-align: center;
+      letter-spacing: 0.02em;
       color: var(--ink);
-    }
-
-    .rsvp-instructions {
-      font-size: 0.9rem;
-      text-align: center;
-      margin-bottom: 1.2rem;
-      max-width: 320px;
-      margin-left: auto;
-      margin-right: auto;
-      color: #4a4541;
-    }
-
-    .rsvp-instructions p {
-      margin-bottom: 0.45rem;
-    }
-
-    .rsvp-instructions ol {
-      text-align: left;
-      padding-left: 1.35rem;
-      margin-top: 0.45rem;
-    }
-
-    .rsvp-instructions li {
       margin-bottom: 0.35rem;
     }
 
+    .rsvp-deadline {
+      font-size: 0.9rem;
+      text-align: center;
+      color: #5a554f;
+      margin-bottom: 1.5rem;
+    }
+
+    .rsvp-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 1.75rem;
+    }
+
     .form-group {
-      margin-bottom: 1.05rem;
+      margin-bottom: 1.35rem;
     }
 
     .form-group label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 0.35rem;
-      color: #4a4541;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
     }
 
-    .form-group input {
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group textarea {
       width: 100%;
-      padding: 0.7rem 0.9rem;
+      padding: 0.65rem 0 0.6rem;
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1.05rem;
-      border: 1px solid rgba(139, 115, 85, 0.35);
-      background: var(--white);
       color: var(--ink);
-      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--white);
+      border: none;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.2s;
     }
 
-    .form-group input::placeholder {
-      color: #9a938c;
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+      padding: 0.65rem 0.5rem 0.6rem;
     }
 
-    .form-group input:focus {
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #9a958f;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.12);
+      border-bottom-color: var(--ink);
     }
 
-    .btn-rsvp {
+    .response-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem 2rem;
+    }
+
+    .response-options label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .response-options input {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--ink);
+    }
+
+    .meal-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.5rem;
+    }
+
+    .meal-options label {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.95rem;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .meal-options input {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--ink);
+    }
+
+    .btn-submit {
       display: block;
       width: 100%;
-      padding: 0.8rem 1.5rem;
+      margin-top: 1.5rem;
+      padding: 0.85rem 1.5rem;
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      background: var(--ink);
-      color: var(--paper);
-      border: 1px solid var(--ink);
+      color: var(--ink);
+      background: var(--sage-light);
+      border: 1px solid rgba(44, 40, 37, 0.15);
       cursor: pointer;
-      transition: background 0.2s, color 0.2s, transform 0.15s;
+      transition: background 0.2s, box-shadow 0.2s;
     }
 
-    .btn-rsvp:hover {
-      background: #1a1714;
-      transform: translateY(-1px);
-    }
-
-    .btn-rsvp:active {
-      transform: translateY(0);
-    }
-
-    .card footer {
-      text-align: center;
-      margin-top: 1.5rem;
-      font-size: 0.8rem;
-      color: #5a534d;
-      font-style: italic;
-      letter-spacing: 0.03em;
+    .btn-submit:hover {
+      background: var(--sage);
+      box-shadow: 0 2px 8px rgba(44, 40, 37, 0.08);
     }
   </style>
 </head>
@@ -249,50 +258,75 @@
   <div class="page-background" aria-hidden="true"></div>
   <div class="page-content">
     <main class="card">
-      <div class="card-inner">
+      <header class="invitation-header">
         <p class="tagline">Let's wine and dine as we celebrate a birthday for</p>
         <h1 class="name">Juliet Marks</h1>
         <div class="details">
-          <p>October 14, 2026</p>
-          <p>Six o'clock in the evening</p>
-          <p>The Palms Hotel</p>
-          <p>Santa Barbara, CA</p>
+          <p>October 14, 2026 · Six o'clock in the evening</p>
+          <p>The Palms Hotel, Santa Barbara, CA</p>
+          <p>Cocktail attire</p>
         </div>
-        <p class="dress">Cocktail attire</p>
+      </header>
 
-        <div class="divider" aria-hidden="true"></div>
+      <section class="rsvp-panel">
+        <h2>RSVP</h2>
+        <p class="rsvp-deadline">Kindly reply for each guest by October 1st, 2026.</p>
+        <div class="rsvp-divider"></div>
 
-        <section class="rsvp-section">
-          <h2>RSVP</h2>
-          <div class="rsvp-instructions">
-            <p>Please reply by October 1, 2026. To confirm your attendance:</p>
-            <ol>
-              <li>Enter your full name below.</li>
-              <li>Click <strong>Send RSVP</strong> to complete your response.</li>
-              <li>You will be taken to the next step to finish your registration.</li>
-            </ol>
+        <form id="rsvp-form" action="#" method="get">
+          <div class="form-group">
+            <label>Full name</label>
+            <div class="form-row">
+              <input type="text" id="first-name" name="first_name" placeholder="First name" required autocomplete="given-name" />
+              <input type="text" id="last-name" name="last_name" placeholder="Last name" required autocomplete="family-name" />
+            </div>
           </div>
 
-          <form id="rsvp-form" action="#" method="get">
-            <div class="form-group">
-              <label for="guest-name">Your name</label>
-              <input
-                type="text"
-                id="guest-name"
-                name="name"
-                placeholder="e.g. Jane Smith"
-                required
-                autocomplete="name"
-              />
+          <div class="form-group">
+            <label>Response</label>
+            <div class="response-options">
+              <label>
+                <input type="radio" name="response" value="accepts" required />
+                Accepts with pleasure
+              </label>
+              <label>
+                <input type="radio" name="response" value="declines" />
+                Declines with regret
+              </label>
             </div>
-            <button type="submit" class="btn-rsvp">Send RSVP</button>
-          </form>
-        </section>
+          </div>
 
-        <footer>
-          We look forward to celebrating with you.
-        </footer>
-      </div>
+          <div class="form-group">
+            <label>Meal preference</label>
+            <div class="meal-options">
+              <label>
+                <input type="radio" name="meal" value="mahi" />
+                Mahi mahi
+              </label>
+              <label>
+                <input type="radio" name="meal" value="filet" />
+                Filet mignon
+              </label>
+              <label>
+                <input type="radio" name="meal" value="risotto" />
+                Risotto
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="note">Note for the host</label>
+            <textarea id="note" name="note" placeholder="Optional message…" autocomplete="off"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="song">Song request</label>
+            <input type="text" id="song" name="song" placeholder="Optional" autocomplete="off" />
+          </div>
+
+          <button type="submit" class="btn-submit">Submit</button>
+        </form>
+      </section>
     </main>
   </div>
 
@@ -301,8 +335,9 @@
 
     document.getElementById('rsvp-form').addEventListener('submit', function (e) {
       e.preventDefault();
-      var nameInput = document.getElementById('guest-name');
-      if (nameInput && nameInput.value.trim()) {
+      var firstName = document.getElementById('first-name');
+      var lastName = document.getElementById('last-name');
+      if (firstName && lastName && firstName.value.trim() && lastName.value.trim()) {
         window.location.href = REDIRECT_URL;
       }
     });
